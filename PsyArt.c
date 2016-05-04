@@ -20,9 +20,9 @@ void initRefreshTimer() {
 }
 
 void initEndStateForDefault(DiodeStructure* diodeStructure) {
-	diodeStructure->rEndState = calculateEndState(diodeStructure->rPulseWidthPercentage, diodeStructure->rState);
-	diodeStructure->gEndState = calculateEndState(diodeStructure->gPulseWidthPercentage, diodeStructure->gState);
-	diodeStructure->bEndState = calculateEndState(diodeStructure->bPulseWidthPercentage, diodeStructure->bState);
+	diodeStructure->diodePwmStructure.rEndState = calculateEndState(diodeStructure->diodePwmStructure.rPulseWidthPercentage, diodeStructure->diodePwmStructure.rState);
+	diodeStructure->diodePwmStructure.gEndState = calculateEndState(diodeStructure->diodePwmStructure.gPulseWidthPercentage, diodeStructure->diodePwmStructure.gState);
+	diodeStructure->diodePwmStructure.bEndState = calculateEndState(diodeStructure->diodePwmStructure.bPulseWidthPercentage, diodeStructure->diodePwmStructure.bState);
 	
 }
 
@@ -31,26 +31,26 @@ DiodeStructure testDiode;
 int main(void)
 {
 	
-	testDiode.portNameR = &PORTC;
-	testDiode.pinNumberR = 1;
+	testDiode.diodePortConfigurationStructure.portNameR = &PORTC;
+	testDiode.diodePortConfigurationStructure.pinNumberR = 1;
 	
-	testDiode.portNameG = &PORTC;
-	testDiode.pinNumberG = 0;
+	testDiode.diodePortConfigurationStructure.portNameG = &PORTC;
+	testDiode.diodePortConfigurationStructure.pinNumberG = 0;
 	
-	testDiode.portNameB = &PORTD;
-	testDiode.pinNumberB = 7;
+	testDiode.diodePortConfigurationStructure.portNameB = &PORTD;
+	testDiode.diodePortConfigurationStructure.pinNumberB = 7;
 	
-	testDiode.rState = 1;
-	testDiode.gState = 0;
-	testDiode.bState = 0;
+	testDiode.diodePwmStructure.rState = 1;
+	testDiode.diodePwmStructure.gState = 0;
+	testDiode.diodePwmStructure.bState = 0;
 	
-	testDiode.rCurrentStateCounter = 0;
-	testDiode.gCurrentStateCounter = 0;
-	testDiode.bCurrentStateCounter = 0;
+	testDiode.diodePwmStructure.rCurrentStateCounter = 0;
+	testDiode.diodePwmStructure.gCurrentStateCounter = 0;
+	testDiode.diodePwmStructure.bCurrentStateCounter = 0;
 	
-	testDiode.rPulseWidthPercentage = 0;
-	testDiode.gPulseWidthPercentage = 0;
-	testDiode.bPulseWidthPercentage = 0.3;
+	testDiode.diodePwmStructure.rPulseWidthPercentage = 0.9;
+	testDiode.diodePwmStructure.gPulseWidthPercentage = 0.9;
+	testDiode.diodePwmStructure.bPulseWidthPercentage = 0.1;
 	
 	initPortsDDR();
 	initRefreshTimer();
@@ -62,7 +62,7 @@ int main(void)
 }
 
 uint32_t counter = 0;
-ISR (TIMER0_OVF_vect) // timer0 overflow interrupt
+ISR (TIMER0_OVF_vect)
 {
 	updateStateCounter(&testDiode);
 	checkIfStateChangeNeeded(&testDiode);
