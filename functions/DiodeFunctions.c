@@ -1,4 +1,5 @@
 #include "DiodeFunctions.h"
+#include <stdlib.h>
 void applyState(DiodeStructure* diodeStructure) {
 	if(diodeStructure->diodePwmStructure.rState == 1) {
 		*(diodeStructure->diodePortConfigurationStructure.portNameR) |= (1 << diodeStructure->diodePortConfigurationStructure.pinNumberR);
@@ -26,11 +27,11 @@ void updateStateCounter(DiodeStructure* diodeStructure) {
 }
 
 
-uint32_t calculateEndState(float pulseWidthPercentage, uint8_t state) {
+uint8_t calculateEndState(uint8_t pulseWidthPercentage, uint8_t state) {
 	if(state == 1) {
-		return 600 * pulseWidthPercentage;
+		return 254.0* ((float)pulseWidthPercentage/254);
 	} else {
-		return 600-(pulseWidthPercentage*600);
+		return 254.0-(((float)pulseWidthPercentage/254)*254.0);
 	}
 }
 
@@ -57,3 +58,32 @@ void checkIfStateChangeNeeded(DiodeStructure* diodeStructure) {
 		applyState(diodeStructure);
 	}
 }
+
+
+void updateAnimation(DiodeStructure* diodeStructure){
+	
+	if(diodeStructure->diodeAnimationStructure.rTargetPulseWidthPercentage > diodeStructure->diodePwmStructure.rPulseWidthPercentage) {
+		diodeStructure->diodePwmStructure.rPulseWidthPercentage += diodeStructure->diodeAnimationStructure.rAnimationStep;
+	} else if (diodeStructure->diodeAnimationStructure.rTargetPulseWidthPercentage < diodeStructure->diodePwmStructure.rPulseWidthPercentage) {
+		diodeStructure->diodePwmStructure.rPulseWidthPercentage -= diodeStructure->diodeAnimationStructure.rAnimationStep;
+	} else {
+		diodeStructure->diodeAnimationStructure.rTargetPulseWidthPercentage = rand()%254;
+	}
+	
+	if(diodeStructure->diodeAnimationStructure.gTargetPulseWidthPercentage > diodeStructure->diodePwmStructure.gPulseWidthPercentage) {
+			diodeStructure->diodePwmStructure.gPulseWidthPercentage += diodeStructure->diodeAnimationStructure.gAnimationStep;
+		} else if (diodeStructure->diodeAnimationStructure.gTargetPulseWidthPercentage < diodeStructure->diodePwmStructure.gPulseWidthPercentage) {
+			diodeStructure->diodePwmStructure.gPulseWidthPercentage -= diodeStructure->diodeAnimationStructure.gAnimationStep;
+		} else {
+		diodeStructure->diodeAnimationStructure.gTargetPulseWidthPercentage = rand()%254;
+	}
+	
+	if(diodeStructure->diodeAnimationStructure.bTargetPulseWidthPercentage > diodeStructure->diodePwmStructure.bPulseWidthPercentage) {
+		diodeStructure->diodePwmStructure.bPulseWidthPercentage += diodeStructure->diodeAnimationStructure.bAnimationStep;
+		} else if (diodeStructure->diodeAnimationStructure.bTargetPulseWidthPercentage < diodeStructure->diodePwmStructure.bPulseWidthPercentage) {
+		diodeStructure->diodePwmStructure.bPulseWidthPercentage -= diodeStructure->diodeAnimationStructure.bAnimationStep;
+		} else {
+		diodeStructure->diodeAnimationStructure.bTargetPulseWidthPercentage = rand()%254;
+	}	
+}
+

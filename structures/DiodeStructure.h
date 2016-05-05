@@ -18,53 +18,48 @@ typedef struct {
 	
 	uint8_t bState;
 	
-	uint32_t rCurrentStateCounter;
+	uint8_t rCurrentStateCounter;
 	
-	uint32_t rEndState;
+	uint8_t rEndState;
 	
-	uint32_t gCurrentStateCounter;
+	uint8_t gCurrentStateCounter;
 	
-	uint32_t gEndState;
+	uint8_t gEndState;
 	
-	uint32_t bCurrentStateCounter;
+	uint8_t bCurrentStateCounter;
 	
-	uint32_t bEndState;
+	uint8_t bEndState;
 	
-	float rPulseWidthPercentage;
+	uint8_t rPulseWidthPercentage;
 	
-	float gPulseWidthPercentage;
+	uint8_t gPulseWidthPercentage;
 	
-	float bPulseWidthPercentage;
+	uint8_t bPulseWidthPercentage;
 } DiodePwmStructure;
 
 typedef struct {
 	
-	uint8_t rAnimationTime;
+	uint8_t rAnimationStep;
 	
-	uint8_t gAnimationTime;
+	uint8_t gAnimationStep;
 	
-	uint8_t bAnimationTime;
+	uint8_t bAnimationStep;
 	
-	float rAnimationStep;
+	uint8_t rTargetPulseWidthPercentage;
 	
-	float gAnimationStep;
+	uint8_t gTargetPulseWidthPercentage;
 	
-	float bAnimationStep;
-	
-	float rTargetPulseWidthPercentage;
-	
-	float gTargetPulseWidthPercentage;
-	
-	float bTargetPulseWidthPercentage;
+	uint8_t bTargetPulseWidthPercentage;
 	
 	
 } DiodeAnimationStructure;
+
 
 typedef struct {
 	
 	DiodePortConfigurationStructure diodePortConfigurationStructure;
 	DiodePwmStructure diodePwmStructure;
-	
+	DiodeAnimationStructure diodeAnimationStructure;
 	
 	
 } DiodeStructure;

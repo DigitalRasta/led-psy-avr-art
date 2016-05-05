@@ -2,6 +2,7 @@
 #include "functions/DiodeFunctions.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <stdlib.h>
 #define F_CPU 8000000
 
 
@@ -12,12 +13,6 @@ void initPortsDDR() {
 	DDRD = 0xFF;
 }
 
-void initRefreshTimer() {
-	TIMSK |= (1 << TOIE0);
-	sei();
-	TCCR0 |= (1 << CS00);
-	TCNT0 = 0;	
-}
 
 void initEndStateForDefault(DiodeStructure* diodeStructure) {
 	diodeStructure->diodePwmStructure.rEndState = calculateEndState(diodeStructure->diodePwmStructure.rPulseWidthPercentage, diodeStructure->diodePwmStructure.rState);
@@ -30,7 +25,7 @@ DiodeStructure testDiode;
 
 int main(void)
 {
-	
+	srand(3);
 	testDiode.diodePortConfigurationStructure.portNameR = &PORTC;
 	testDiode.diodePortConfigurationStructure.pinNumberR = 1;
 	
@@ -48,22 +43,32 @@ int main(void)
 	testDiode.diodePwmStructure.gCurrentStateCounter = 0;
 	testDiode.diodePwmStructure.bCurrentStateCounter = 0;
 	
-	testDiode.diodePwmStructure.rPulseWidthPercentage = 0.9;
-	testDiode.diodePwmStructure.gPulseWidthPercentage = 0.9;
-	testDiode.diodePwmStructure.bPulseWidthPercentage = 0.1;
+	testDiode.diodePwmStructure.rPulseWidthPercentage = 254;
+	testDiode.diodePwmStructure.gPulseWidthPercentage = 254;
+	testDiode.diodePwmStructure.bPulseWidthPercentage = 254;
+	
+	testDiode.diodeAnimationStructure.rTargetPulseWidthPercentage = 1;
+	testDiode.diodeAnimationStructure.rAnimationStep = 1;
+	
+	testDiode.diodeAnimationStructure.gTargetPulseWidthPercentage = 1;
+	testDiode.diodeAnimationStructure.gAnimationStep = 1;
+	
+	testDiode.diodeAnimationStructure.bTargetPulseWidthPercentage = 1;
+	testDiode.diodeAnimationStructure.bAnimationStep = 1;
 	
 	initPortsDDR();
-	initRefreshTimer();
 	initEndStateForDefault(&testDiode);
+	
+	uint32_t animationCounter = 0;
+	uint32_t animationCounterEndStep = 1000;
     while(1)
     {
-        //applyState(&testDiode);
+        updateStateCounter(&testDiode);
+        checkIfStateChangeNeeded(&testDiode);
+		animationCounter++;
+		if(animationCounter > animationCounterEndStep) {
+			updateAnimation(&testDiode);
+			animationCounter = 0;
+		}
     }
-}
-
-uint32_t counter = 0;
-ISR (TIMER0_OVF_vect)
-{
-	updateStateCounter(&testDiode);
-	checkIfStateChangeNeeded(&testDiode);
 }
