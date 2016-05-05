@@ -26,13 +26,13 @@ DiodeStructure testDiode;
 int main(void)
 {
 	srand(3);
-	testDiode.diodePortConfigurationStructure.portNameR = &PORTC;
-	testDiode.diodePortConfigurationStructure.pinNumberR = 1;
+	testDiode.diodePortConfigurationStructure.portNameR = &PORTB;
+	testDiode.diodePortConfigurationStructure.pinNumberR = 4;
 	
-	testDiode.diodePortConfigurationStructure.portNameG = &PORTC;
-	testDiode.diodePortConfigurationStructure.pinNumberG = 0;
+	testDiode.diodePortConfigurationStructure.portNameG = &PORTB;
+	testDiode.diodePortConfigurationStructure.pinNumberG = 2;
 	
-	testDiode.diodePortConfigurationStructure.portNameB = &PORTD;
+	testDiode.diodePortConfigurationStructure.portNameB = &PORTB;
 	testDiode.diodePortConfigurationStructure.pinNumberB = 7;
 	
 	testDiode.diodePwmStructure.rState = 1;
@@ -43,9 +43,13 @@ int main(void)
 	testDiode.diodePwmStructure.gCurrentStateCounter = 0;
 	testDiode.diodePwmStructure.bCurrentStateCounter = 0;
 	
-	testDiode.diodePwmStructure.rPulseWidthPercentage = 254;
-	testDiode.diodePwmStructure.gPulseWidthPercentage = 254;
-	testDiode.diodePwmStructure.bPulseWidthPercentage = 254;
+	testDiode.diodePwmStructure.rEndState = 800;
+	testDiode.diodePwmStructure.gEndState = 800;
+	testDiode.diodePwmStructure.bEndState = 800;
+	
+	testDiode.diodePwmStructure.rPulseWidthPercentage = 100;
+	testDiode.diodePwmStructure.gPulseWidthPercentage = 100;
+	testDiode.diodePwmStructure.bPulseWidthPercentage = 100;
 	
 	testDiode.diodeAnimationStructure.rTargetPulseWidthPercentage = 1;
 	testDiode.diodeAnimationStructure.rAnimationStep = 1;
@@ -60,7 +64,7 @@ int main(void)
 	initEndStateForDefault(&testDiode);
 	
 	uint32_t animationCounter = 0;
-	uint32_t animationCounterEndStep = 1000;
+	uint32_t animationCounterEndStep = 300;
     while(1)
     {
         updateStateCounter(&testDiode);

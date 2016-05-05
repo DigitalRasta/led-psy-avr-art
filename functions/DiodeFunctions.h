@@ -10,7 +10,7 @@ void updateStateCounter(DiodeStructure* diodeStructure);
 
 void updateAnimation(DiodeStructure* diodeStructure);
 
-uint8_t calculateEndState(uint8_t rPulseWidthPercentage, uint8_t bState);
+uint16_t calculateEndState(uint16_t rPulseWidthPercentage, uint8_t bState);
 
 void checkIfStateChangeNeeded(DiodeStructure* diodeStructure);
 #endif

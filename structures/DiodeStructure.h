@@ -2,6 +2,8 @@
 #ifndef DIODESTRUCTURE_H_
 #define DIODESTRUCTURE_H_
 
+#define TICKS_PERIOD 300.0
+
 typedef struct {
 	volatile uint8_t *portNameR;
 	uint8_t pinNumberR;
@@ -18,23 +20,23 @@ typedef struct {
 	
 	uint8_t bState;
 	
-	uint8_t rCurrentStateCounter;
+	uint16_t rCurrentStateCounter;
 	
-	uint8_t rEndState;
+	uint16_t rEndState;
 	
-	uint8_t gCurrentStateCounter;
+	uint16_t gCurrentStateCounter;
 	
-	uint8_t gEndState;
+	uint16_t gEndState;
 	
-	uint8_t bCurrentStateCounter;
+	uint16_t bCurrentStateCounter;
 	
-	uint8_t bEndState;
+	uint16_t bEndState;
 	
-	uint8_t rPulseWidthPercentage;
+	uint16_t rPulseWidthPercentage;
 	
-	uint8_t gPulseWidthPercentage;
+	uint16_t gPulseWidthPercentage;
 	
-	uint8_t bPulseWidthPercentage;
+	uint16_t bPulseWidthPercentage;
 } DiodePwmStructure;
 
 typedef struct {
@@ -45,11 +47,15 @@ typedef struct {
 	
 	uint8_t bAnimationStep;
 	
-	uint8_t rTargetPulseWidthPercentage;
+	uint16_t rTargetPulseWidthPercentage;
 	
-	uint8_t gTargetPulseWidthPercentage;
+	uint16_t gTargetPulseWidthPercentage;
 	
-	uint8_t bTargetPulseWidthPercentage;
+	uint16_t bTargetPulseWidthPercentage;
+	
+	uint8_t rFlag;
+	uint8_t gFlag;
+	uint8_t bFlag;
 	
 	
 } DiodeAnimationStructure;
