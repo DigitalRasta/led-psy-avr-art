@@ -2,7 +2,7 @@
 #ifndef DIODESTRUCTURE_H_
 #define DIODESTRUCTURE_H_
 
-#define TICKS_PERIOD 300.0
+#define TICKS_PERIOD 100.0
 
 typedef struct {
 	volatile uint8_t *portNameR;

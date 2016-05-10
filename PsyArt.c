@@ -26,16 +26,16 @@ DiodeStructure testDiode;
 int main(void)
 {
 	srand(3);
-	testDiode.diodePortConfigurationStructure.portNameR = &PORTB;
-	testDiode.diodePortConfigurationStructure.pinNumberR = 4;
+	testDiode.diodePortConfigurationStructure.portNameR = &PORTA;
+	testDiode.diodePortConfigurationStructure.pinNumberR = 0;
 	
 	testDiode.diodePortConfigurationStructure.portNameG = &PORTB;
 	testDiode.diodePortConfigurationStructure.pinNumberG = 2;
 	
-	testDiode.diodePortConfigurationStructure.portNameB = &PORTB;
-	testDiode.diodePortConfigurationStructure.pinNumberB = 7;
+	testDiode.diodePortConfigurationStructure.portNameB = &PORTD;
+	testDiode.diodePortConfigurationStructure.pinNumberB = 3;
 	
-	testDiode.diodePwmStructure.rState = 1;
+	testDiode.diodePwmStructure.rState = 0;
 	testDiode.diodePwmStructure.gState = 0;
 	testDiode.diodePwmStructure.bState = 0;
 	

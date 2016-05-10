@@ -86,13 +86,24 @@ void updateAnimation(DiodeStructure* diodeStructure){
 		diodeStructure->diodeAnimationStructure.bFlag = 1;
 	}	
 	if(diodeStructure->diodeAnimationStructure.rFlag && diodeStructure->diodeAnimationStructure.gFlag && diodeStructure->diodeAnimationStructure.bFlag) {
-		diodeStructure->diodeAnimationStructure.rTargetPulseWidthPercentage = rand()%200;
+		diodeStructure->diodeAnimationStructure.rTargetPulseWidthPercentage = rand()%80;
 		diodeStructure->diodeAnimationStructure.gTargetPulseWidthPercentage = rand()%(int)TICKS_PERIOD;
-		diodeStructure->diodeAnimationStructure.bTargetPulseWidthPercentage = rand()%200;
+		diodeStructure->diodeAnimationStructure.bTargetPulseWidthPercentage = rand()%80;
 		
 		diodeStructure->diodeAnimationStructure.rFlag = 0;
 		diodeStructure->diodeAnimationStructure.gFlag = 0;
 		diodeStructure->diodeAnimationStructure.bFlag = 0;
+		
+		diodeStructure->diodePwmStructure.rEndState = 1;
+		diodeStructure->diodePwmStructure.rState = 0;
+		diodeStructure->diodePwmStructure.rCurrentStateCounter = 2;
+		diodeStructure->diodePwmStructure.gEndState = 1;
+		diodeStructure->diodePwmStructure.gState = 0;
+		diodeStructure->diodePwmStructure.gCurrentStateCounter = 2;
+		diodeStructure->diodePwmStructure.bEndState = 1;
+		diodeStructure->diodePwmStructure.bState = 0;
+		diodeStructure->diodePwmStructure.bCurrentStateCounter = 2;
+		applyState(diodeStructure);
 	}
 }
 
